@@ -1,58 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jobby/home.dart';
-import 'register.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
 
-
-class EmailController {
-  final TextEditingController controller = TextEditingController();
-  bool isValid = false;
-
-  EmailController() {
-    controller.addListener(_validateEmail);
-  }
-
-  void dispose() {
-    controller.dispose();
-  }
-
-  void _validateEmail() {
-    isValid = false;
-    String email = controller.text.trim();
-    if(email.isNotEmpty){
-      isValid = RegExp(r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$')
-          .hasMatch(email);
-    }
-
-  }
-}
-
-
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  EmailController _emailController = EmailController();
-  TextEditingController _passwordController = TextEditingController();
-  bool isEmailValidFormat = true;
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
+    return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
@@ -63,12 +16,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextField(
               controller: _emailController.controller,
-              onChanged: (value) {setState(() {
-                isEmailValidFormat = _emailController.isValid;
-              });},
               decoration: InputDecoration(
                 labelText: 'Email',
-                errorText: isEmailValidFormat ? null: 'Invalid email format'
+                errorText: _emailController.isValid ? null: 'Invalid email'
               ),
             ),
             SizedBox(height: 16.0),
@@ -83,7 +33,6 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               onPressed: () {
                 // Implement your login logic here
-                _emailController._validateEmail();
                 if (!_emailController.isValid) {
                   return;
                 }
@@ -121,8 +70,6 @@ class _LoginPageState extends State<LoginPage> {
               ],)
             ),
           ],
-        ),
-      ),
-    );
+        ),;
   }
 }

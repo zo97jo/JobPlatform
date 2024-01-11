@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jobby/components/google_login.dart';
+import 'package:jobby/home.dart';
+import 'package:jobby/login/register.dart';
+import 'package:jobby/profile/user_profile.dart';
 import 'login/login.dart';
 
 void main() {
@@ -13,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Jobby',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -33,6 +38,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: LoginPage(),
+      routes: {
+        '/login': (context) => LoginPage(),
+        '/register': (context) => RegisterPage(),
+        '/home': (context) => HomePage(),
+        '/userProfile': (context) => UserProfile()
+      },
       //home: const MyHomePage(title: 'Jobby Home Page'),
     );
   }

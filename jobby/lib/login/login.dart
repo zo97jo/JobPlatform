@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jobby/components/google_login.dart';
 import 'package:jobby/home.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 import 'register.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 
 
 class EmailController {
@@ -27,6 +28,7 @@ class EmailController {
 
   }
 }
+
 
 
 class LoginPage extends StatefulWidget {
@@ -61,23 +63,27 @@ class _LoginPageState extends State<LoginPage> {
               height: 200,
               fit: BoxFit.contain,
             ),
-            TextField(
-              controller: _emailController.controller,
-              onChanged: (value) {setState(() {
-                isEmailValidFormat = _emailController.isValid;
-              });},
-              decoration: InputDecoration(
-                labelText: 'Email',
-                errorText: isEmailValidFormat ? null: 'Invalid email format'
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(
-                labelText: 'Password',
-              ),
-              obscureText: true,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(
+                  controller: _emailController.controller,
+                  onChanged: (value) {setState(() {
+                    isEmailValidFormat = _emailController.isValid;
+                  });},
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    errorText: isEmailValidFormat ? null: 'Invalid email format'
+                  ),
+                ),
+                TextField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  obscureText: true,
+                ),
+              ],
             ),
             SizedBox(height: 24.0),
             ElevatedButton(
@@ -90,7 +96,8 @@ class _LoginPageState extends State<LoginPage> {
                 String email = _emailController.controller.text;
                 String password = _passwordController.text;
                 // Perform validation or send login request to backend
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
+                Navigator.pushNamed(context, '/home');
+                // Navigator.push(context, MaterialPageRoute(builder: (context)=> HomePage()));
               },
               child: Text('Login'),
             ),
@@ -98,10 +105,7 @@ class _LoginPageState extends State<LoginPage> {
             GestureDetector(
               onTap: () {
                 // Navigate to the register page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
-                );
+                Navigator.pushNamed(context, '/register');
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +124,33 @@ class _LoginPageState extends State<LoginPage> {
               ),
               ],)
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SignInButton(
+                  Buttons.google, 
+                  onPressed: (){ } ,
+                  elevation: 0.0,
+                  
+                ),
+                SizedBox(height:12.0),
+                SignInButton(
+                  Buttons.apple,
+                  onPressed: (){},
+                  padding: EdgeInsets.all(10),
+                  elevation: 0.0,
+                ),
+                SizedBox(height:12.0),
+                 SignInButton(
+                  Buttons.facebookNew,
+                  onPressed: (){},
+                  padding: EdgeInsets.all(10),
+                  elevation: 0.0,
+                ),
+              ],
+            ),
           ],
+
         ),
       ),
     );

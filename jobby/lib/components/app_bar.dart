@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
 
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
+
+  bool isOnProfilePage = false;
+
+  CustomAppBar({super.key});
+
+    
+  CustomAppBar.origin(bool isOnProfilePage){
+    this.isOnProfilePage = isOnProfilePage;
+  }
+  
+  @override
+  State<CustomAppBar> createState() => _CustomAppBarState();
+  
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
 
 
   @override
@@ -19,17 +36,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
         ),
         actions: [
-          IconButton(
-            onPressed: (){
-              Navigator.pushNamed(context, '/userProfile');
-            },
-            icon: const Icon(Icons.person_3, color: Colors.black,))
+          if(!widget.isOnProfilePage)...<Widget>[
+            IconButton(
+              onPressed: (){
+                Navigator.pushNamed(context, '/userProfile');
+              },
+              icon: const Icon(Icons.person_3, color: Colors.black,))
+          ]
+          
         ],
 
     );
   }
-  
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
 }
 
